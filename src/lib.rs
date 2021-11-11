@@ -66,3 +66,21 @@ pub mod prelude {
 	// useful types
 	pub use crate::MainResult;
 }
+
+/// re-exports all these dependencies so that they don't have to be declared
+/// as a dependency in consumer code, and so that you can be sure that
+/// the version used in this lib is the same as the one you are using in your code
+pub mod deps {
+	pub use async_trait;
+	pub use chrono;
+	pub use dotenv;
+	pub use futures;
+	pub use tokio;
+	pub use twilight_cache_inmemory;
+	pub use twilight_gateway;
+	pub use twilight_http;
+	pub use twilight_mention;
+	pub use twilight_model;
+	pub use twilight_standby;
+	pub use twilight_util;
+}
