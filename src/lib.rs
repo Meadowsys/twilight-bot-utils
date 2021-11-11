@@ -32,7 +32,7 @@ pub fn setup_http(env: &Env) -> MainResult<Arc<HttpClient>> {
 }
 
 pub async fn setup_cluster(env: &Env, intents: &Intents) -> MainResult<(Arc<Cluster>, Events)> {
-	let (cluster, events) = Cluster::builder(env.token(), intents.clone())
+	let (cluster, events) = Cluster::builder(env.token(), *intents)
 		.shard_scheme(twilight_gateway::cluster::ShardScheme::Auto)
 		.build()
 		.await?;

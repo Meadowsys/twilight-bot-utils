@@ -28,7 +28,7 @@ impl Env {
 			.expect("could not find suitable bot token");
 
 		let port = var("PORT")
-			.unwrap_or("7079".into())
+			.unwrap_or_else(|_| "7079".into())
 			.parse::<u16>()
 			.expect("failed to parse port");
 
