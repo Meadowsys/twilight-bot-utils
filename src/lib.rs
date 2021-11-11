@@ -1,7 +1,18 @@
 pub mod modules;
 pub mod env;
 
-pub fn make_tokio_runtime() -> tokio::runtime::Runtime {
+use env::Env;
+use std::error::Error;
+use std::sync::Arc;
+use tokio::runtime::Runtime;
+use twilight_gateway::Cluster;
+use twilight_gateway::cluster::Events;
+use twilight_gateway::Intents;
+use twilight_http::Client as HttpClient;
+
+pub type MainResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
+
+pub fn make_tokio_runtime() -> Runtime {
 	let rt = tokio::runtime::Builder::new_multi_thread()
 		.enable_all()
 		.worker_threads(2)
@@ -11,6 +22,23 @@ pub fn make_tokio_runtime() -> tokio::runtime::Runtime {
 		.unwrap();
 
 	rt
+}
+
+pub fn setup_http(env: &Env) -> MainResult<Arc<HttpClient>> {
+	let http = HttpClient::new(env.token().into());
+	let http = Arc::new(http);
+
+	Ok(http)
+}
+
+pub async fn setup_cluster(env: &Env, intents: &Intents) -> MainResult<(Arc<Cluster>, Events)> {
+	let (cluster, events) = Cluster::builder(env.token(), intents.clone())
+		.shard_scheme(twilight_gateway::cluster::ShardScheme::Auto)
+		.build()
+		.await?;
+	let cluster = Arc::new(cluster);
+
+	Ok((cluster, events))
 }
 
 pub mod prelude {
@@ -34,4 +62,7 @@ pub mod prelude {
 
 	// useful functions
 	pub use tokio::spawn;
+
+	// useful types
+	pub use crate::MainResult;
 }
