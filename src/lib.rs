@@ -16,9 +16,10 @@ pub mod prelude {
 
 	// useful structs and types from elsewhere
 	pub use std::sync::Arc;
+	pub use std::sync::Mutex;
 	pub use twilight_gateway::cluster::Cluster;
 	pub use twilight_gateway::cluster::Events;
-	pub use twilight_gateway::cluster::ShardScheme::Auto;
+	pub use twilight_gateway::cluster::ShardScheme;
 	pub use twilight_gateway::Intents;
 
 	// useful traits
