@@ -1,6 +1,7 @@
 pub mod env;
 pub mod modules;
 pub mod rt;
+pub mod http;
 
 use env::Env;
 use std::error::Error;
@@ -8,16 +9,8 @@ use std::sync::Arc;
 use twilight_gateway::Cluster;
 use twilight_gateway::cluster::Events;
 use twilight_gateway::Intents;
-use twilight_http::Client as HttpClient;
 
 pub type MainResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
-
-pub fn setup_http(env: &Env) -> MainResult<Arc<HttpClient>> {
-	let http = HttpClient::new(env.token().into());
-	let http = Arc::new(http);
-
-	Ok(http)
-}
 
 pub async fn setup_cluster(env: &Env, intents: &Intents) -> MainResult<(Arc<Cluster>, Events)> {
 	let (cluster, events) = Cluster::builder(env.token(), *intents)
