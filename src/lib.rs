@@ -1,26 +1,12 @@
+pub mod cluster;
 pub mod env;
 pub mod modules;
 pub mod rt;
 pub mod http;
 
-use env::Env;
 use std::error::Error;
-use std::sync::Arc;
-use twilight_gateway::Cluster;
-use twilight_gateway::cluster::Events;
-use twilight_gateway::Intents;
 
 pub type MainResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
-
-pub async fn setup_cluster(env: &Env, intents: &Intents) -> MainResult<(Arc<Cluster>, Events)> {
-	let (cluster, events) = Cluster::builder(env.token(), *intents)
-		.shard_scheme(twilight_gateway::cluster::ShardScheme::Auto)
-		.build()
-		.await?;
-	let cluster = Arc::new(cluster);
-
-	Ok((cluster, events))
-}
 
 pub mod prelude {
 	// useful structs from this lib
