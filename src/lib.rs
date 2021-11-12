@@ -1,28 +1,16 @@
-pub mod modules;
 pub mod env;
+pub mod modules;
+pub mod rt;
 
 use env::Env;
 use std::error::Error;
 use std::sync::Arc;
-use tokio::runtime::Runtime;
 use twilight_gateway::Cluster;
 use twilight_gateway::cluster::Events;
 use twilight_gateway::Intents;
 use twilight_http::Client as HttpClient;
 
 pub type MainResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
-
-pub fn make_tokio_runtime() -> Runtime {
-	let rt = tokio::runtime::Builder::new_multi_thread()
-		.enable_all()
-		.worker_threads(2)
-		.max_blocking_threads(32)
-		.thread_keep_alive(std::time::Duration::from_secs(60))
-		.build()
-		.unwrap();
-
-	rt
-}
 
 pub fn setup_http(env: &Env) -> MainResult<Arc<HttpClient>> {
 	let http = HttpClient::new(env.token().into());
