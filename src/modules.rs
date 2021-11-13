@@ -1,6 +1,8 @@
 pub use async_trait::async_trait;
 pub use twilight_gateway::Event::*;
 
+use crate::MainResult;
+use futures::Future;
 use std::error::Error;
 use std::sync::Arc;
 use twilight_gateway::Event as GatewayEvent;
@@ -62,14 +64,18 @@ impl ModuleHandler {
 		self
 	}
 
-	pub async fn init_modules(mut self, current_user: CurrentUser, http: Arc<HttpClient>) -> crate::MainResult<ModuleHandler> {
-		let init_stuff = InitStuff { current_user, http };
+	pub async fn init_modules(mut self, current_user: CurrentUser, http: &Arc<HttpClient>) -> impl Future<Output = MainResult<ModuleHandler>> {
+		let http = Arc::clone(http);
 
-		for module in self.modules.iter_mut() {
-			module.init(&init_stuff).await?;
+		async move {
+			let init_stuff = InitStuff { current_user, http };
+
+			for module in self.modules.iter_mut() {
+				module.init(&init_stuff).await?;
+			}
+
+			Ok(self)
 		}
-
-		Ok(self)
 	}
 
 	pub fn into_modules(self) -> ProperWrappedModules {
