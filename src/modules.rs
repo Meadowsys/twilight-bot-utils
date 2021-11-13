@@ -73,11 +73,12 @@ impl ModuleHandler {
 	}
 
 	pub fn into_modules(self) -> ProperWrappedModules {
-		Arc::new(
-			self.modules.into_iter()
-				.map(Arc::new)
-				.collect()
-		)
+		let mut modules_vec = self.modules.into_iter()
+			.map(Arc::new)
+			.collect::<Vec<_>>();
+		modules_vec.shrink_to_fit();
+
+		Arc::new(modules_vec)
 	}
 }
 
