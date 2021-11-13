@@ -27,3 +27,24 @@ pub async fn process_events(
 		});
 	}
 }
+
+pub async fn watch_for_shutdown_signals(f: impl FnOnce(&str)) {
+	use tokio::signal::unix::{ signal, SignalKind };
+
+	let mut sigint = signal(SignalKind::interrupt()).unwrap();
+	let mut sigterm = signal(SignalKind::terminate()).unwrap();
+
+	tokio::select! {
+		// without biased, tokio::select! will choose random branches to poll,
+		// which incurs a small cpu cost for the random number generator
+		// biased polling is fine here
+		biased;
+
+		_ = sigint.recv() => {
+			f("SIGINT");
+		}
+		_ = sigterm.recv() => {
+			f("SIGTERM")
+		}
+	}
+}
