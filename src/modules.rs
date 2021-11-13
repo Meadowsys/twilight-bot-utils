@@ -48,6 +48,10 @@ impl ModuleHandler {
 		ModuleHandler { modules }
 	}
 
+	pub fn with_capacity(capacity: usize) -> ModuleHandler {
+		ModuleHandler { modules: Vec::with_capacity(capacity) }
+	}
+
 	pub fn add_module(mut self, module: impl Module + 'static) -> ModuleHandler {
 		self.modules.push(Box::new(module));
 		self
