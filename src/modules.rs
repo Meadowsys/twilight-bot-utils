@@ -76,3 +76,13 @@ impl ModuleHandler {
 		)
 	}
 }
+
+/// boxes the given module
+pub fn b(module: impl Module + 'static) -> Box<dyn Module> {
+	Box::new(module)
+}
+
+/// arcs the given boxed module
+pub fn a(module: Box<dyn Module>) -> Arc<Box<dyn Module>> {
+	Arc::new(module)
+}
