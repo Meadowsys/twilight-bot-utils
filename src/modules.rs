@@ -10,8 +10,17 @@ use twilight_gateway::Intents;
 use twilight_http::Client as HttpClient;
 use twilight_model::user::CurrentUser;
 
-pub type InitResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
+pub type InitResult<T = InitialisedModule> = Result<T, Box<dyn Error + Send + Sync>>;
 pub type HandleResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
+
+pub use InitialisedModule::*;
+
+/// todo get a better name AaAaAaAaAaAaA
+pub enum InitialisedModule {
+	Done,
+	UseThis(Box<dyn Module>)
+}
+
 
 pub struct InitStuff {
 	pub current_user: CurrentUser,
@@ -31,7 +40,7 @@ pub trait Module: Send + Sync {
 		Intents::empty()
 	}
 
-	async fn init(&mut self, _: &InitStuff) -> InitResult { Ok(()) }
+	async fn init(&mut self, _: &InitStuff) -> InitResult { Ok(Done) }
 	async fn handle_event(&self, event: Event) -> HandleResult;
 }
 
