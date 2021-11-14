@@ -26,6 +26,9 @@ features = ["full"]
 [dependencies.twilight-cache-inmemory]
 version = "0.7"
 
+[dependencies.twilight-embed-builder]
+version = "0.7"
+
 [dependencies.twilight-gateway]
 version = "0.7"
 

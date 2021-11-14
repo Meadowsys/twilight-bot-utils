@@ -21,6 +21,7 @@ pub mod deps {
 	pub use futures;
 	pub use tokio;
 	pub use twilight_cache_inmemory;
+	pub use twilight_embed_builder;
 	pub use twilight_gateway;
 	pub use twilight_http;
 	pub use twilight_mention;
