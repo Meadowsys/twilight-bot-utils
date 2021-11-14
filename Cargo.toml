@@ -43,3 +43,4 @@ version = "0.7"
 
 [dependencies.twilight-util]
 version = "0.7"
+features = ["builder", "link", "permission-calculator", "snowflake"]
