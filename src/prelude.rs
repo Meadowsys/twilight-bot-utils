@@ -1,6 +1,6 @@
 pub use crate::cluster::setup_cluster;
 pub use crate::deps::*;
-pub use crate::env::Env;
+pub use crate::env::*;
 pub use crate::http::get_current_user;
 pub use crate::http::setup_http;
 pub use crate::MainResult;
