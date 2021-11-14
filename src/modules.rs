@@ -54,12 +54,12 @@ impl ModuleHandler {
 		ModuleHandler { modules: Vec::with_capacity(capacity) }
 	}
 
-	pub fn add_module(mut self, module: impl Module + 'static) -> ModuleHandler {
+	pub fn add_module(&mut self, module: impl Module + 'static) -> &ModuleHandler {
 		self.modules.push(Box::new(module));
 		self
 	}
 
-	pub fn add_modules(mut self, modules: Vec<Box<dyn Module>>) -> ModuleHandler {
+	pub fn add_modules(&mut self, modules: Vec<Box<dyn Module>>) -> &ModuleHandler {
 		self.modules.extend(modules);
 		self
 	}
