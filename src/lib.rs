@@ -10,30 +10,27 @@ use std::error::Error;
 pub type MainResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
 
 pub mod prelude {
-	// useful structs from this lib
+	pub use crate::cluster::setup_cluster;
+	pub use crate::deps::*;
 	pub use crate::env::Env;
-	pub use crate::modules::Event;
-	pub use crate::modules::InitStuff;
-
-	// useful structs and types from elsewhere
-	pub use std::sync::Arc;
-	pub use std::sync::Mutex;
-	pub use twilight_gateway::cluster::Cluster;
-	pub use twilight_gateway::cluster::Events;
-	pub use twilight_gateway::cluster::ShardScheme;
-	pub use twilight_gateway::Intents;
-
-	// useful traits
+	pub use crate::http::get_current_user;
+	pub use crate::http::setup_http;
+	pub use crate::MainResult;
+	pub use crate::modules::*;
+	pub use crate::rt::make_tokio_runtime;
+	pub use crate::run::process_events;
+	pub use crate::run::watch_for_shutdown_signals;
 	pub use futures::future::Future;
 	pub use futures::future::FutureExt;
 	pub use futures::stream::StreamExt;
 	pub use std::error::Error;
-
-	// useful functions
+	pub use std::sync::Arc;
+	pub use std::sync::Mutex;
 	pub use tokio::spawn;
-
-	// useful types
-	pub use crate::MainResult;
+	pub use twilight_gateway::cluster::Cluster;
+	pub use twilight_gateway::cluster::Events;
+	pub use twilight_gateway::cluster::ShardScheme;
+	pub use twilight_gateway::Intents;
 }
 
 /// re-exports all these dependencies so that they don't have to be declared

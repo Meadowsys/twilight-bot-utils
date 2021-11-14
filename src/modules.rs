@@ -64,7 +64,8 @@ impl ModuleHandler {
 		self
 	}
 
-	pub fn init_modules(mut self, current_user: CurrentUser, http: &Arc<HttpClient>) -> impl Future<Output = MainResult<ModuleHandler>> {
+	pub fn init_modules(mut self, http: &Arc<HttpClient>, current_user: &CurrentUser) -> impl Future<Output = MainResult<ModuleHandler>> {
+		let current_user = current_user.clone();
 		let http = Arc::clone(http);
 
 		async move {
