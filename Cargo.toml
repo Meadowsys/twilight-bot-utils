@@ -24,26 +24,26 @@ version = "1"
 features = ["full"]
 
 [dependencies.twilight-cache-inmemory]
-version = "0.7"
+version = "0.8.3"
 
 [dependencies.twilight-embed-builder]
-version = "0.7"
+version = "0.8.0"
 
 [dependencies.twilight-gateway]
-version = "0.7"
+version = "0.8.2"
 
 [dependencies.twilight-http]
-version = "0.7"
+version = "0.8.3"
 
 [dependencies.twilight-mention]
-version = "0.7"
+version = "0.8.0"
 
 [dependencies.twilight-model]
-version = "0.7"
+version = "0.8.3"
 
 [dependencies.twilight-standby]
-version = "0.7"
+version = "0.8.1"
 
 [dependencies.twilight-util]
-version = "0.7"
+version = "0.8.1"
 features = ["builder", "link", "permission-calculator", "snowflake"]
