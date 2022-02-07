@@ -8,45 +8,45 @@ rust-version = "1.56.1"
 
 
 [dependencies.async-trait]
-version = "0.1"
+version = "~0.1.52"
 
 [dependencies.chrono]
-version = "0.4"
+version = "~0.4.19"
 
 [dependencies.dotenv]
-version = "0.15"
+version = "~0.15.0"
 
 [dependencies.futures]
-version = "0.3"
+version = "~0.3.20"
 
 [dependencies.num_cpus]
-version = "1.13.1"
+version = "~1.13.1"
 
 [dependencies.tokio]
-version = "1"
+version = "~1.16.1"
 features = ["full"]
 
 [dependencies.twilight-cache-inmemory]
-version = "0.8.3"
+version = "~0.9.0"
 
 [dependencies.twilight-embed-builder]
-version = "0.8.0"
+version = "~0.9.0"
 
 [dependencies.twilight-gateway]
-version = "0.8.2"
+version = "~0.9.0"
 
 [dependencies.twilight-http]
-version = "0.8.3"
+version = "~0.9.0"
 
 [dependencies.twilight-mention]
-version = "0.8.0"
+version = "~0.9.0"
 
 [dependencies.twilight-model]
-version = "0.8.3"
+version = "~0.9.0"
 
 [dependencies.twilight-standby]
-version = "0.8.1"
+version = "~0.9.0"
 
 [dependencies.twilight-util]
-version = "0.8.1"
+version = "~0.9.0"
 features = ["builder", "link", "permission-calculator", "snowflake"]
