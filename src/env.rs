@@ -17,8 +17,15 @@ pub struct Env {
 	port: u16
 }
 
+lazy_static! {
+	static ref ENV: Env = {
+		let env = Env::get_env();
+		env
+	};
+}
+
 impl Env {
-	pub fn get_env() -> Env {
+	pub(self) fn get_env() -> Env {
 		init_dotenv();
 
 		let token = env_var("TOKEN")
@@ -33,12 +40,12 @@ impl Env {
 		Env { token, port }
 	}
 
-	pub fn token(&self) -> &str {
-		&self.token
+	pub fn token() -> &'static str {
+		&ENV.token
 	}
 
-	pub fn port(&self) -> &u16 {
-		&self.port
+	pub fn port() -> &'static u16 {
+		&ENV.port
 	}
 }
 

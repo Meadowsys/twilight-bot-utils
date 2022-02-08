@@ -5,8 +5,8 @@ use std::sync::Arc;
 use twilight_http::Client as HttpClient;
 use twilight_model::user::CurrentUser;
 
-pub fn setup_http(env: &Env) -> MainResult<Arc<HttpClient>> {
-	let http = HttpClient::new(env.token().into());
+pub fn setup_http() -> MainResult<Arc<HttpClient>> {
+	let http = HttpClient::new(Env::token().into());
 	let http = Arc::new(http);
 
 	Ok(http)
