@@ -1,3 +1,4 @@
+use std::cmp::max;
 use std::ops::Deref;
 
 fn init_dotenv() {
@@ -44,7 +45,7 @@ impl Env {
 			.or("NUM_THREADS")
 			.into_option()
 			.map(|n| n.parse::<usize>())
-			.unwrap_or_else(|| Ok(num_cpus::get()))
+			.unwrap_or_else(|| Ok(max(num_cpus::get(), 2)))
 			.unwrap();
 
 		Env { token, port, num_threads }
