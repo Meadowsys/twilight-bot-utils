@@ -1,3 +1,5 @@
+use std::ops::Deref;
+
 #[cfg(debug_assertions)]
 fn init_dotenv() {
 	if let Err(e) = dotenv::dotenv() {
@@ -46,7 +48,7 @@ impl Env {
 
 		let num_threads = env_var("THREADS")
 			.or("NUM_THREADS")
-			.get_option()
+			.into_option()
 			.map(|n| n.parse::<usize>())
 			.unwrap_or_else(|| Ok(num_cpus::get()))
 			.unwrap();
@@ -136,15 +138,19 @@ impl EnvVar {
 		self.var.expect(&format!(r#"could not find a suitable environment variable. tried variables: "{}""#, self.tried_names.join(r#"", ""#)))
 	}
 
-	pub fn get_or(self, default: String) -> String {
-		self.var.unwrap_or(default.into())
-	}
-
 	pub fn get_or_else(self, default: impl FnOnce() -> String) -> String {
 		self.var.unwrap_or_else(default)
 	}
 
-	pub fn get_option(self) -> Option<String> {
+	fn into_option(self) -> Option<String> {
 		self.var
+	}
+}
+
+impl Deref for EnvVar {
+	type Target = Option<String>;
+
+	fn deref(&self) -> &Self::Target {
+		&self.var
 	}
 }
