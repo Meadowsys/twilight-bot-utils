@@ -1,17 +1,11 @@
 use std::ops::Deref;
 
-#[cfg(debug_assertions)]
 fn init_dotenv() {
 	if let Err(e) = dotenv::dotenv() {
 		eprintln!("dotenv failed to initialise: {}", e);
 	} else {
 		eprintln!("initialised dotenv successfully");
 	}
-}
-
-#[cfg(not(debug_assertions))]
-fn init_dotenv() {
-	// dotenv is not used in production
 }
 
 #[cfg_attr(debug_assertions, derive(Debug))]
