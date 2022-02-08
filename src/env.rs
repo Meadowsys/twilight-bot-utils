@@ -12,6 +12,7 @@ fn init_dotenv() {
 	// dotenv is not used in production
 }
 
+#[cfg_attr(debug_assertions, derive(Debug))]
 pub struct Env {
 	token: String,
 	port: u16,
@@ -21,6 +22,11 @@ pub struct Env {
 lazy_static! {
 	static ref ENV: Env = {
 		let env = Env::get_env();
+
+		#[cfg(debug_assertions)] {
+			eprintln!("env: {:?}", env);
+		}
+
 		env
 	};
 }
