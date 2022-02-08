@@ -14,7 +14,8 @@ fn init_dotenv() {
 
 pub struct Env {
 	token: String,
-	port: u16
+	port: u16,
+	num_threads: usize
 }
 
 lazy_static! {
@@ -33,11 +34,18 @@ impl Env {
 			.get();
 
 		let port = env_var("PORT")
-			.get_or_default("7079".into())
+			.get_or_else(|| "7079".into())
 			.parse::<u16>()
 			.expect("failed to parse port");
 
-		Env { token, port }
+		let num_threads = env_var("THREADS")
+			.or("NUM_THREADS")
+			.get_option()
+			.map(|n| n.parse::<usize>())
+			.unwrap_or_else(|| Ok(num_cpus::get()))
+			.unwrap();
+
+		Env { token, port, num_threads }
 	}
 
 	pub fn token() -> &'static str {
@@ -46,6 +54,10 @@ impl Env {
 
 	pub fn port() -> &'static u16 {
 		&ENV.port
+	}
+
+	pub fn num_threads() -> &'static usize {
+		&ENV.num_threads
 	}
 }
 
@@ -118,7 +130,15 @@ impl EnvVar {
 		self.var.expect(&format!(r#"could not find a suitable environment variable. tried variables: "{}""#, self.tried_names.join(r#"", ""#)))
 	}
 
-	pub fn get_or_default(self, default: String) -> String {
+	pub fn get_or(self, default: String) -> String {
 		self.var.unwrap_or(default.into())
+	}
+
+	pub fn get_or_else(self, default: impl FnOnce() -> String) -> String {
+		self.var.unwrap_or_else(default)
+	}
+
+	pub fn get_option(self) -> Option<String> {
+		self.var
 	}
 }
