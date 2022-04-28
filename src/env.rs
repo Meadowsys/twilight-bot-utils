@@ -55,12 +55,12 @@ impl Env {
 		&ENV.token
 	}
 
-	pub fn port() -> &'static u16 {
-		&ENV.port
+	pub fn port() -> u16 {
+		ENV.port
 	}
 
-	pub fn num_threads() -> &'static usize {
-		&ENV.num_threads
+	pub fn num_threads() -> usize {
+		ENV.num_threads
 	}
 }
 
