@@ -89,6 +89,12 @@ impl ModuleHandler {
 	}
 }
 
+impl Default for ModuleHandler {
+	fn default() -> Self {
+		Self::new()
+	}
+}
+
 /// boxes the given module
 pub fn b(module: impl Module + 'static) -> Box<dyn Module> {
 	Box::new(module)

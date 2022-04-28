@@ -130,7 +130,7 @@ impl EnvVar {
 		// 	}
 		// }
 
-		self.var.expect(&format!(r#"could not find a suitable environment variable. tried variables: "{}""#, self.tried_names.join(r#"", ""#)))
+		self.var.unwrap_or_else(|| panic!(r#"could not find a suitable environment variable. tried variables: "{}""#, self.tried_names.join(r#"", ""#)))
 	}
 
 	pub fn get_or_else(self, default: impl FnOnce() -> String) -> String {
