@@ -14,9 +14,9 @@ pub type MainResult<T = ()> = Result<T, Box<dyn Error + Send + Sync>>;
 
 pub mod prelude;
 
-/// re-exports all these dependencies so that they don't have to be declared
+/// re-exports dependencies so that they don't have to be declared
 /// as a dependency in consumer code, and so that you can be sure that
-/// the version used in this lib is the same as the one you are using in your code
+/// the version used in this lib is the same as the one you are using in consumer code
 pub mod deps {
 	pub use async_trait;
 	pub use chrono;
@@ -24,7 +24,6 @@ pub mod deps {
 	pub use futures;
 	pub use tokio;
 	pub use twilight_cache_inmemory;
-	pub use twilight_embed_builder;
 	pub use twilight_gateway;
 	pub use twilight_http;
 	pub use twilight_mention;
