@@ -29,9 +29,6 @@ version = "~1.13.1"
 version = "~1.18.0"
 features = ["full"]
 
-[dependencies.twilight-cache-inmemory]
-version = "~0.10.2"
-
 [dependencies.twilight-gateway]
 version = "~0.10.1"
 
